@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload CSV</title>
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+</head>
+<body>
+<nav class="navbar">
+    <ul class="nav-links">
+        <li><a href="/upload">Upload a new CSV</a></li>
+        <li><a href="/list/">List</a></li>
+        <li><a href="/carrier/states/">Current Carriers</a></li>
+    </ul>
+</nav>
+<div class="title-container">
+    <h1>Upload CSV <i class="fa-solid fa-arrow-up-from-bracket"></i></h1>
+    <h2>Welcome, <%= user.email %>!</h2>
+</div>
+
+<form id="uploadForm" enctype="multipart/form-data">
+    <input type="file" name="file" accept=".csv, .xls, .xlsx" required>
+    <button type="submit">Upload</button>
+</form>
+<div id="message"></div>
+
+<script>
+    document.getElementById('uploadForm').onsubmit = async function(event) {
+        event.preventDefault();
+        const formData = new FormData(event.target);
+        const token = localStorage.getItem('token');
+        const response = await fetch('/api/csv/upload', {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        const result = await response.json();
+        document.getElementById('message').innerHTML = result.message || 'File uploaded successfully <i class="fa-regular fa-circle-check"></i> - View List <a href="/list/">Here</a>.';
+    };
+</script>
+</body>
+</html>

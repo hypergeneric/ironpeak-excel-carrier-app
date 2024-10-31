@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uploaded Items</title>
+    <script>
+        async function setLive(id) {
+            const response = await fetch(`/api/csv/list/${id}/live`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                console.log('Updated:', data);
+                location.reload();
+            } else {
+                console.error('Error setting live version');
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<nav class="navbar">
+    <ul class="nav-links">
+        <li><a href="/upload">Upload a new CSV</a></li>
+        <li><a href="/list/">List</a></li>
+        <li><a href="/carrier/states/">Current Carriers</a></li>
+    </ul>
+</nav>
+<h1>Uploaded Items</h1>
+<table border="1">
+    <thead>
+    <tr>
+        <th>Uploaded Time</th>
+        <th>Uploaded User</th>
+        <th>Uploaded File</th>
+        <th>Is Live</th>
+        <th>Preview</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% uploads.forEach(upload => { %>
+        <tr>
+            <td><%= upload.uploaded_time %></td>
+            <td><%= upload.uploaded_user %></td>
+            <td><%= upload.uploaded_file_name %></td>
+            <td><%= upload.is_live ? 'Yes' : 'No' %></td>
+            <td>
+                <a href="/carrier/states/?id=<%= upload.id %>">View Carriers &#10145;</a>
+            </td>
+            <td>
+                <button onclick="setLive(<%= upload.id %>)" <%= upload.is_live ? 'disabled' : '' %>>Set Live</button>
+            </td>
+        </tr>
+    <% }) %>
+    </tbody>
+</table>
+</body>
+</html>

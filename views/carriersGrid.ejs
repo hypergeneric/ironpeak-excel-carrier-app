@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrier Grid</title>
+    <style>
+
+        .grid {
+            display: block;
+        }
+        .grid-item {
+            border: 1px solid #ccc;
+            padding: 10px;
+            background-color: #f9f9f9;
+            margin-bottom: 20px;
+        }
+        .loading {
+            text-align: center;
+            font-size: 1.2em;
+            color: #999;
+        }
+
+        .carriers {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+            padding: 10px;
+            gap: 10px;
+            font-family: "Arial";
+        }
+
+        .carrier {
+            width: 200px;
+            height: 200px;
+            background-color: #DEDEDE;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+            padding: 10px;
+        }
+
+        .carrier .name {
+            font-size: 16px;
+        }
+
+        .carrier .items {
+            font-size: 20px;
+            line-height: 20px;
+            margin: 0;
+            padding: 0;
+            text-transform: uppercase;
+            color: #999999;
+        }
+
+        .carrier .img {
+            font-size: 12px;
+        }
+
+        .carrier .link {
+            font-size: 10px;
+            text-decoration: none;
+            margin-top: 10px;
+        }
+
+    </style>
+    <script>
+        async function fetchCarriers(state, id) {
+            const response = await fetch(`/api/csv/get/carrier/state/${state}?id=${id}`);
+            if (response.ok) {
+                const carriers = await response.json();
+                renderCarriers(state, carriers);
+            } else {
+                console.error('Error fetching carriers for state:', state);
+                document.getElementById(`state-${state}`).innerHTML = '<p>No carriers found.</p>';
+            }
+        }
+
+        function renderCarriers(state, carriers) {
+            const container = document.getElementById(`state-${state}`);
+            if (carriers.length > 0) {
+                let html = '<div class="carriers">';
+                carriers.forEach(carrier => {
+                    const items = [carrier.cl, carrier.pl, carrier.sl];
+                    const yesItems = items
+                        .map((item, index) => (item === 'yes' ? `${['cl', 'pl', 'sl'][index]}` : null))
+                        .filter(item => item !== null)
+                        .join(', ');
+
+                    html += `<div class="carrier">
+                        <p class="items">${yesItems}</p>
+                        <p class="name">${carrier.carrier}</p>
+                        <div class="img">${carrier.img ? `<img src="${carrier.img}" alt="Carrier Logo" style="width: 50px; height: auto;">` : 'No Logo'}</div>
+                        <a class="link" href="${carrier.url}" target="_blank">Go to Carrier →</a>
+                    </div>`;
+                });
+                html += '</tbody></table>';
+                container.innerHTML = html;
+            } else {
+                container.innerHTML = '<p>No carriers found for this state.</p>';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const states = ["AL", "AR", "AZ", "CA", "CO", "CT", "DC", "DE", "FL", "GA", "IA", "ID", "IL", "IN", "KS", "KY", "LA", "MA", "MD", "ME", "MI", "MN", "MO", "MS", "MT", "NC", "ND", "NE", "NH", "NJ", "NM", "NV", "NY", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VA", "VT", "WA", "WI", "WV", "WY"];
+            const id = '<%= id %>';
+            states.forEach(state => {
+                const stateContainer = document.getElementById(`state-${state}`);
+                stateContainer.innerHTML = '<p class="loading">Loading...</p>';
+                fetchCarriers(state, id);
+            });
+        });
+    </script>
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+</head>
+<body>
+<nav class="navbar">
+    <ul class="nav-links">
+        <li><a href="/upload">Upload a new CSV</a></li>
+        <li><a href="/list/">List</a></li>
+        <li><a href="/carrier/states/">Current Carriers</a></li>
+    </ul>
+</nav>
+<h1>Carriers List for Upload <%= id %></h1>
+<div class="grid">
+    <%
+    const states = [
+        { name: "Alabama", code: "AL" },
+        { name: "Arkansas", code: "AR" },
+        { name: "Arizona", code: "AZ" },
+        { name: "California", code: "CA" },
+        { name: "Colorado", code: "CO" },
+        { name: "Connecticut", code: "CT" },
+        { name: "DC", code: "DC" },
+        { name: "Delaware", code: "DE" },
+        { name: "Florida", code: "FL" },
+        { name: "Georgia", code: "GA" },
+        { name: "Iowa", code: "IA" },
+        { name: "Idaho", code: "ID" },
+        { name: "Illinois", code: "IL" },
+        { name: "Indiana", code: "IN" },
+        { name: "Kansas", code: "KS" },
+        { name: "Kentucky", code: "KY" },
+        { name: "Louisiana", code: "LA" },
+        { name: "Massachusetts", code: "MA" },
+        { name: "Maryland", code: "MD" },
+        { name: "Maine", code: "ME" },
+        { name: "Michigan", code: "MI" },
+        { name: "Minnesota", code: "MN" },
+        { name: "Missouri", code: "MO" },
+        { name: "Mississippi", code: "MS" },
+        { name: "Montana", code: "MT" },
+        { name: "North Carolina", code: "NC" },
+        { name: "North Dakota", code: "ND" },
+        { name: "Nebraska", code: "NE" },
+        { name: "New Hampshire", code: "NH" },
+        { name: "New Jersey", code: "NJ" },
+        { name: "New Mexico", code: "NM" },
+        { name: "Nevada", code: "NV" },
+        { name: "New York", code: "NY" },
+        { name: "Ohio", code: "OH" },
+        { name: "Oklahoma", code: "OK" },
+        { name: "Oregon", code: "OR" },
+        { name: "Pennsylvania", code: "PA" },
+        { name: "Rhode Island", code: "RI" },
+        { name: "South Carolina", code: "SC" },
+        { name: "South Dakota", code: "SD" },
+        { name: "Tennessee", code: "TN" },
+        { name: "Texas", code: "TX" },
+        { name: "Utah", code: "UT" },
+        { name: "Virginia", code: "VA" },
+        { name: "Vermont", code: "VT" },
+        { name: "Washington", code: "WA" },
+        { name: "Wisconsin", code: "WI" },
+        { name: "West Virginia", code: "WV" },
+        { name: "Wyoming", code: "WY" }
+    ];
+     %>
+    <% states.forEach(state => { %>
+        <div class="grid-item">
+            <h2><%= state.name %></h2>
+            <div id="state-<%= state.code %>"></div>
+        </div>
+    <% }); %>
+</div>
+<a href="/uploads">Back to Uploads</a>
+</body>
+</html>
