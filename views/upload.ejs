@@ -15,8 +15,11 @@
         <li><a href="/carrier/states/">Current Carriers</a></li>
     </ul>
 </nav>
-<h1>Upload CSV <i class="fa-solid fa-arrow-up-from-bracket"></i></h1>
-<h2>Welcome, <%= user.email %>!</h2>
+<div class="title-container">
+    <h1>Upload CSV <i class="fa-solid fa-arrow-up-from-bracket"></i></h1>
+    <h2>Welcome, <%= user.email %>!</h2>
+</div>
+
 <form id="uploadForm" enctype="multipart/form-data">
     <input type="file" name="file" accept=".csv, .xls, .xlsx" required>
     <button type="submit">Upload</button>
