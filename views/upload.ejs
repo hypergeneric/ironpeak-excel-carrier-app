@@ -14,7 +14,7 @@
         <li><a href="/carrier/states/">Current Carriers</a></li>
     </ul>
 </nav>
-<h1>Upload CSV</h1>
+<h1>Upload CSV <i class="fa-solid fa-arrow-up-from-bracket"></i></h1>
 <h2>Welcome, <%= user.email %>!</h2>
 <form id="uploadForm" enctype="multipart/form-data">
     <input type="file" name="file" accept=".csv, .xls, .xlsx" required>
@@ -35,7 +35,7 @@
             }
         });
         const result = await response.json();
-        document.getElementById('message').innerText = result.message || 'File uploaded successfully';
+        document.getElementById('message').innerText = result.message || 'File uploaded successfully <i class="fa-regular fa-circle-check"></i> - View List <a href="/list/">Here</a>.';
     };
 </script>
 </body>

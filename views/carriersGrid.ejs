@@ -24,7 +24,7 @@
         .carriers {
             display: flex;
             flex-wrap: wrap;
-            justify-content: space-between;
+            justify-content: flex-start;
             padding: 10px;
             gap: 10px;
             font-family: "Arial";
@@ -95,7 +95,7 @@
                         <p class="items">${yesItems}</p>
                         <p class="name">${carrier.carrier}</p>
                         <div class="img">${carrier.img ? `<img src="${carrier.img}" alt="Carrier Logo" style="width: 50px; height: auto;">` : 'No Logo'}</div>
-                        <a class="link" href="${carrier.url}" target="_blank">${carrier.url}</a>
+                        <a class="link" href="${carrier.url}" target="_blank">Go to Carrier →</a>
                     </div>`;
                 });
                 html += '</tbody></table>';
@@ -116,6 +116,7 @@
         });
     </script>
     <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 </head>
 <body>
 <nav class="navbar">

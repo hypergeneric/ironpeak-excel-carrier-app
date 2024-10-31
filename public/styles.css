@@ -47,9 +47,10 @@ button:hover {
 }
 
 #message {
-    margin: 10px 0;
-    font-size: 14px;
-    color: #ff0000;
+    margin: 50px 0;
+    font-size: 16px;
+    color: #009688;
+    text-align: center;
 }
 
 @media (max-width: 600px) {
