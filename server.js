@@ -26,6 +26,7 @@ const allowedOrigins = [
     'http://localhost', // local front-end
     'https://hypergeneric.com', // Sample front-end
     'https://secret-dawn-68319-79b8049a9538.herokuapp.com',
+    'https://ironpeak-carrier-app-0633de823338.herokuapp.com',
     'https://iroquois-group.webflow.io',
     'https://ironpeaknetwork.com',
     'https://ironpeak.com/',
