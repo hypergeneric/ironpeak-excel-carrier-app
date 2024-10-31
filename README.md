@@ -5,7 +5,7 @@ This is a Node.js application with session-based and JWT authentication using Po
 
 - [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli) installed.
 - [Node.js](https://nodejs.org/) installed.
-- A PostgreSQL database setup (via Heroku or locally).
+- [postgresql](https://wiki.postgresql.org/wiki/Homebrew) installed.
 
 ## Installation Steps
 
@@ -44,6 +44,7 @@ Add the PostgreSQL add-on to your Heroku app:
 ```bash
 heroku addons:create heroku-postgresql:hobby-dev
 ```
+Alternatively, if this command does not work, you can go to the "Resources" section in heroku and in the "Add-ons" portion of the screen search for "Heroku Postgres" and add.
 
 Retrieve the database URL from Heroku:
 ```bash
@@ -81,6 +82,6 @@ Commit your changes and deploy
 ```bash
 git add .
 git commit -m "Initial commit"
-git push heroku master
+git push heroku main
 heroku open
 ```
