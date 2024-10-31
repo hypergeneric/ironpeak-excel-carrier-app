@@ -17,7 +17,7 @@ const sendResetEmail = async (email, token) => {
         },
     });
 
-    const resetLink = `${process.env.RESET_URL_BASE}/reset-password/${token}`;
+    const resetLink = `${process.env.HEROKU_URL_BASE}reset-password/${token}`;
     const mailOptions = {
         from: process.env.RESET_FROM_EMAIL,
         to: email,
@@ -95,7 +95,7 @@ exports.resetPassword = async (req, res) => {
         const hashedPassword = await bcrypt.hash(newPassword, 10); // Hash the new password
         await pool.query('UPDATE users SET password = $1, reset_token = NULL, reset_token_expiration = NULL WHERE id = $2', [hashedPassword, user.id]);
 
-        res.json({ message: 'Password has been reset successfully' });
+        res.json({ success: true, message: 'Password has been reset successfully' });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Internal server error' });
