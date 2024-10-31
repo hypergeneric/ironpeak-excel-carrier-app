@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrier Lookup by State</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #666;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+<h1>Carrier Lookup by State</h1>
+<label for="state">Enter State (e.g., AZ, TX): </label>
+<input type="text" id="state" placeholder="Enter state">
+<button id="lookupButton">Lookup Carriers</button>
+
+<table id="resultsTable" style="display: none;">
+    <thead>
+    <tr id="headerRow"></tr>
+    </thead>
+    <tbody id="resultsBody"></tbody>
+</table>
+
+<script>
+    const keyMapping = {
+        carrier: "Carrier Name",
+        img: "Image",
+    };
+
+    document.getElementById('lookupButton').onclick = async function() {
+        const state = document.getElementById('state').value;
+        const response = await fetch(`/api/csv/get/carrier/state/${state}`);
+        const data = await response.json();
+
+        const resultsBody = document.getElementById('resultsBody');
+        const headerRow = document.getElementById('headerRow');
+        resultsBody.innerHTML = '';
+        headerRow.innerHTML = '';
+
+        if (data.length === 0) {
+            resultsBody.innerHTML = '<tr><td colspan="1">No carriers found.</td></tr>';
+        } else {
+            Object.keys(data[0]).forEach(key => {
+                const th = document.createElement('th');
+                th.textContent = keyMapping[key] || key;
+                headerRow.appendChild(th);
+            });
+
+            data.forEach(carrier => {
+                const row = document.createElement('tr');
+
+                Object.keys(carrier).forEach(key => {
+                    const cell = document.createElement('td');
+                    cell.textContent = carrier[key];
+                    row.appendChild(cell);
+                });
+
+                resultsBody.appendChild(row);
+            });
+        }
+
+        document.getElementById('resultsTable').style.display = 'table';
+    };
+</script>
+</body>
+</html>

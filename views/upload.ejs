@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload CSV</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<nav class="navbar">
+    <ul class="nav-links">
+        <li><a href="/upload">Upload a new CSV</a></li>
+        <li><a href="/list/">List</a></li>
+        <li><a href="/carrier/states/">Current Carriers</a></li>
+    </ul>
+</nav>
+<h1>Upload CSV</h1>
+<h2>Welcome, <%= user.email %>!</h2>
+<form id="uploadForm" enctype="multipart/form-data">
+    <input type="file" name="file" accept=".csv, .xls, .xlsx" required>
+    <button type="submit">Upload</button>
+</form>
+<div id="message"></div>
+
+<script>
+    document.getElementById('uploadForm').onsubmit = async function(event) {
+        event.preventDefault();
+        const formData = new FormData(event.target);
+        const token = localStorage.getItem('token');
+        const response = await fetch('/api/csv/upload', {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        const result = await response.json();
+        document.getElementById('message').innerText = result.message || 'File uploaded successfully';
+    };
+</script>
+</body>
+</html>
