@@ -19,6 +19,7 @@ const configurePassport = require('./passport');
 
 const app = express();
 
+const herokuDomain = process.env.HEROKU_URL_BASE.replace(/\/$/, '');
 
 const allowedOrigins = [
     'http://localhost:3000', // local front-end
@@ -29,9 +30,10 @@ const allowedOrigins = [
     'https://ironpeak-carrier-app-0633de823338.herokuapp.com',
     'https://iroquois-group.webflow.io',
     'https://ironpeaknetwork.com',
-    'https://ironpeak.com/',
+    'https://ironpeak.com',
     'https://www.ironpeaknetwork.com',
-    'https://www.ironpeak.com/',
+    'https://www.ironpeak.com',
+    `${herokuDomain}`,
 
 ];
 
