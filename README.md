@@ -46,21 +46,27 @@ heroku addons:create heroku-postgresql:hobby-dev
 ```
 Alternatively, if this command does not work, you can go to the "Resources" section in heroku and in the "Add-ons" portion of the screen search for "Heroku Postgres" and add.
 
-Retrieve the database URL from Heroku:
-```bash
-heroku config:get DATABASE_URL
-```
-Make sure to update the YOUR_DATABASE_USERNAME, YOUR_DATABASE_PASSSWORD, YOUR_DATABASE_HOST, and YOUR_DATABASE_NAME in your .env file with the correct values from the DATABASE_URL.
-
+Note: You may have to wait a couple of minutes for the database to be created before moving on to the next step.
 ### 5. Run init.sql
 
 You will need to run an intial SQL file that initializes your database schema. To run this script, you can connect to your Heroku PostgreSQL database using the psql command:
 
 Open the PostgreSQL shell and execute SQL
 ```bash
-heroku pg:psql
+heroku pg:psql -a your-app-name-here
 \i init.sql
 ```
+
+Once complete type the following command to quit psql
+```bash
+\q
+```
+
+Retrieve the database URL from Heroku:
+```bash
+heroku config:get DATABASE_URL
+```
+Make sure to update the YOUR_DATABASE_USERNAME, YOUR_DATABASE_PASSSWORD, YOUR_DATABASE_HOST, and YOUR_DATABASE_NAME in your .env file with the correct values from the DATABASE_URL.
 
 ### 6. Create the First User
 
