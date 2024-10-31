@@ -12,8 +12,8 @@ This is a Node.js application with session-based and JWT authentication using Po
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/my-app.git
-cd my-app
+git clone https://github.com/hypergeneric/ironpeak-excel-carrier-app
+cd ironpeak-excel-carrier-app
 ```
 
 ### 2. Create a Heroku App
