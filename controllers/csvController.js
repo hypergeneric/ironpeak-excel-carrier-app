@@ -79,7 +79,7 @@ exports.uploadCsv = [
                 [req.user.email, csvDataJson, req.file.originalname] // Save the filename or any reference you want
             );
 
-            res.json({ message: 'File uploaded and processed', data: csvData, uploadedRecord: result.rows[0] });
+            res.json({ message: 'File uploaded successfully <i class="fa-regular fa-circle-check"></i> - View List <a href="/list/">Here</a>.', data: csvData, uploadedRecord: result.rows[0] });
         } catch (error) {
             console.error('Error processing file:', error);
             res.status(500).json({ message: 'Error processing file' });

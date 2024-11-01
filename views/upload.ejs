@@ -39,7 +39,7 @@
             }
         });
         const result = await response.json();
-        document.getElementById('message').innerHTML = result.message || 'File uploaded successfully <i class="fa-regular fa-circle-check"></i> - View List <a href="/list/">Here</a>.';
+        document.getElementById('message').innerHTML = result.message;
     };
 </script>
 </body>
